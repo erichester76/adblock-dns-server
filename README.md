@@ -74,7 +74,9 @@ defaults.
   // Path to the redis socket file.
   "redis_socket_file": "/tmp/redis.sock",
   // Ratelimits (per second) to place on IPs querying the DNS server.
-  "ratelimits": {"limit": 10, "limit_burst": 2}
+  "ratelimits": {"limit": 10, "limit_burst": 2},
+  // The port on which the server will be run. Helpful for development.
+  "port": 5454
 }
 ```
 

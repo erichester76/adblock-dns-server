@@ -38,19 +38,19 @@ def get_config(conf=None):
     with open(conf) as f:
       config = json.load(f)
 
-  config['_policies'] = {}
-
   for entry in ['blacklist', 'whitelist']:
     if entry not in config:
       config[entry] = set()
     else:
       config[entry] = {i + '.' for i in config[entry]}
 
-  if 'redis_socket_file' not in config:
-    config['redis_socket_file'] = '/var/run/redis/redis.sock'
-
-  if 'ratelimits' not in config:
-    config['ratelimits'] = {}
+  for entry, default in [
+    ('redis_socket_file', '/var/run/redis/redis.sock'),
+    ('ratelimits', {}),
+    ('port', 53)
+  ]:
+    if entry not in config:
+      config[entry] = default
 
   for entry, default in [('limit', 10), ('limit_burst', 2)]:
     if entry not in config['ratelimits']:
@@ -203,8 +203,8 @@ def run_server():
     server_class.allow_reuse_address = True
     server_class.address_family = socket.AF_INET6
 
-  udp_server = ThreadedUDPServer(('', 5454), UDPHandler)
-  tcp_server = ThreadedTCPServer(('', 5454), TCPHandler)
+  udp_server = ThreadedUDPServer(('', config['port']), UDPHandler)
+  tcp_server = ThreadedTCPServer(('', config['port']), TCPHandler)
   udp_server_thread = threading.Thread(target=udp_server.serve_forever)
   tcp_server_thread = threading.Thread(target=tcp_server.serve_forever)
   try:
