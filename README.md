@@ -25,7 +25,7 @@ else, you can also disable it from using TCP ports. The command below does
 these two things mentioned above:
 
 ```
-$ sed -ri 's/^bind /#&/;s/^(port ).*$/\\10/;s/^# (unixsocket)/\\1/;s/^(unixsocketperm )[0-9]+/\\1777/' /etc/redis/redis.conf
+$ sed -ri 's/^bind /#&/;s/^(port ).*$/\10/;s/^# (unixsocket)/\1/;s/^(unixsocketperm )[0-9]+/\1777/' /etc/redis/redis.conf
 ```
 
 * Clone and enter into the repository directory:
