@@ -106,12 +106,13 @@ def dns_query(name, rdtype):
       return pickle.loads(cached_result)
 
     if is_blacklisted_host(name):
-      raise dns.resolver.NXDOMAIN
-
-    result = dns.resolver.query(name, rdtype, raise_on_no_answer=False)
-    response = result.response
-    rv = (response.rcode(), response.answer, response.authority, response.additional)
-    expiration = max(300, int((time.time() - result.expiration)/3))
+      rv = (dns.rcode.NXDOMAIN, [], [], [])
+      expiration = 3600
+    else:
+      result = dns.resolver.query(name, rdtype, raise_on_no_answer=False)
+      response = result.response
+      rv = (response.rcode(), response.answer, response.authority, response.additional)
+      expiration = max(300, int((time.time() - result.expiration)/3))
   except dns.exception.DNSException as e:
     expiration = 300
     if isinstance(e, dns.resolver.NXDOMAIN):
