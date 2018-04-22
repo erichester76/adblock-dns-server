@@ -169,10 +169,11 @@ class UDPHandler(socketserver.BaseRequestHandler):
       return
 
     raw_response = response.to_wire()
-    if len(raw_response) > 512:
+    if len(raw_response) <= 512:
+      socket.sendto(raw_response, self.client_address)
+    else:
       response.flags |= dns.flags.TC
-
-    socket.sendto(response.to_wire()[:512], self.client_address)
+      socket.sendto(response.to_wire()[:512], self.client_address)
 
 class TCPHandler(socketserver.BaseRequestHandler):
   def handle(self):
