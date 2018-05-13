@@ -23,7 +23,9 @@ allowed_rdtypes = [
   dns.rdatatype.NS,
   dns.rdatatype.SOA,
   dns.rdatatype.SRV,
-  dns.rdatatype.CNAME
+  dns.rdatatype.CNAME,
+  dns.rdatatype.PTR,
+  dns.rdatatype.CAA
 ]
 
 def setup_nameservers():
