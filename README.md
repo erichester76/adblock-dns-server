@@ -1,7 +1,8 @@
-# simple-dns-server
+# adblock-dns-server
 
 A simple DNS server using [dnspython](https://github.com/rthalley/dnspython)
-and [socketserver](https://docs.python.org/3/library/socketserver.html).
+and [socketserver](https://docs.python.org/3/library/socketserver.html) for
+the purpose of blocking ads.
 
 This server has been written keeping personal usage in mind, and has features
 such as JSON-based configuration and an easy way to blacklist websites. In
