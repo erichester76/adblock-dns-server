@@ -54,7 +54,11 @@ def get_config(conf=None):
     if entry not in config:
       config[entry] = default
 
-  for entry, default in [('limit', 10), ('limit_burst', 2)]:
+  for entry, default in [
+    ('limit', 10),
+    ('limit_burst', 2),
+    ('enabled', True)
+  ]:
     if entry not in config['ratelimits']:
       config['ratelimits'][entry] = default
 
@@ -149,7 +153,7 @@ def handle_query(raw_data, client_ip):
   if rdtype not in allowed_rdtypes:
     return
 
-  if ratelimited(client_ip):
+  if config['ratelimits']['enabled'] and ratelimited(client_ip):
     return
 
   name = str(query.question[0].name)
