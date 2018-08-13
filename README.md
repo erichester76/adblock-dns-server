@@ -13,7 +13,7 @@ use and allows lessening of the impacts of amplification attacks.
 ## Usage
 
 The server requires Python3 and Redis to run. These instructions are for
-Ubuntu, although it can be run on any distribution.
+Ubuntu 16.04, although it can be run on any distribution.
 
 * Install the dependencies:
 
@@ -26,7 +26,7 @@ else, you can also disable it from using TCP ports. The command below does
 these two things mentioned above:
 
 ```
-$ sed -ri 's/^bind /#&/;s/^(port ).*$/\10/;s/^# (unixsocket)/\1/;s/^(unixsocketperm )[0-9]+/\1777/' /etc/redis/redis.conf
+$ sudo sed -ri 's/^bind /#&/;s/^(port ).*$/\10/;s/^# (unixsocket)/\1/;s/^(unixsocketperm )[0-9]+/\1777/' /etc/redis/redis.conf
 ```
 
 * Clone and enter into the repository directory:
@@ -48,15 +48,17 @@ $ pip install redis idna hiredis
 * Run the server:
 
 ```
-$ ./server.py
+$ sudo ./server.py
 ```
+
+If you don't want to run it as root, consider looking into authbind.
 
 ## Configuration
 
 You can run the server with a JSON configuration file, as follows:
 
 ```
-$ ./server.py /path/to/config.json
+$ sudo ./server.py /path/to/config.json
 ```
 
 The following settings can be configured. All of these have reasonable
@@ -75,7 +77,7 @@ defaults.
   // Path to the redis socket file.
   "redis_socket_file": "/tmp/redis.sock",
   // Ratelimits (per second) to place on IPs querying the DNS server.
-  "ratelimits": {"limit": 10, "limit_burst": 2},
+  "ratelimits": {"limit": 10, "limit_burst": 2, "enabled": true},
   // The port on which the server will be run. Helpful for development.
   "port": 5454
 }
