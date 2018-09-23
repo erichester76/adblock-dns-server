@@ -2,6 +2,7 @@
 
 import sys
 import time
+import math
 import json
 import redis
 import pickle
@@ -93,12 +94,12 @@ def ratelimited(ip):
 
   if rl_params:
     access_time, tokens = pickle.loads(rl_params)
-    tokens = min(limit, tokens + limit_burst * int(current_time - access_time))
+    tokens = min(limit, tokens + limit_burst * (current_time - access_time))
   else:
     access_time, tokens = current_time, limit
 
   redis_conn.set(key, pickle.dumps((current_time, max(0, tokens - 1))))
-  redis_conn.expire(key, int(ratio) + 1)
+  redis_conn.expire(key, math.ceil(ratio))
   return tokens < 1
 
 def dns_query(name, rdtype):
