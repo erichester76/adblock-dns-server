@@ -47,21 +47,13 @@ def get_config(conf=None):
         else:
             config[entry] = {i + '.' for i in config[entry]}
 
-    for entry, default in [
-        ('redis_socket_file', '/var/run/redis/redis.sock'),
-        ('ratelimits', {}),
-        ('port', 53)
-    ]:
-        if entry not in config:
-            config[entry] = default
+    config.setdefault('redis_socket_file', '/var/run/redis/redis.sock')
+    config.setdefault('ratelimits', {})
+    config.setdefault('port', 53)
 
-    for entry, default in [
-        ('limit', 10),
-        ('limit_burst', 2),
-        ('enabled', True)
-    ]:
-        if entry not in config['ratelimits']:
-            config['ratelimits'][entry] = default
+    config['ratelimits'].setdefault('limit', 20)
+    config['ratelimits'].setdefault('limit_burst', 4)
+    config['ratelimits'].setdefault('enabled', True)
 
     return config
 
