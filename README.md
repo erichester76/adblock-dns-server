@@ -6,9 +6,10 @@ the purpose of blocking ads.
 
 This server has been written keeping personal usage in mind, and has features
 such as JSON-based configuration and an easy way to blacklist websites. In
-addition, the server will send out no responses in case an "uncommon" query
-(such as ANY) is found. These query types should not be necessary for personal
-use and allows lessening of the impacts of amplification attacks.
+addition, the server will send refuse to send out responses in case an
+"uncommon" query (such as ANY) is found. These query types should not be
+necessary for personal use and allows lessening of the impacts of
+amplification attacks.
 
 ## Usage
 
