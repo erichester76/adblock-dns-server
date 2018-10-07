@@ -48,7 +48,7 @@ def get_config(conf=None):
             config[entry] = {i + '.' for i in config[entry]}
 
     config.setdefault('redis_socket_file', '/var/run/redis/redis.sock')
-    config.setdefault('disable_ra_bit', False):
+    config.setdefault('disable_ra_bit', False)
     config.setdefault('ratelimits', {})
     config.setdefault('port', 53)
 
