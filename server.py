@@ -48,6 +48,7 @@ def get_config(conf=None):
             config[entry] = {i + '.' for i in config[entry]}
 
     config.setdefault('redis_socket_file', '/var/run/redis/redis.sock')
+    config.setdefault('disable_ra_bit', False):
     config.setdefault('ratelimits', {})
     config.setdefault('port', 53)
 
@@ -130,7 +131,11 @@ def dns_query(name, rdtype):
 
 def make_response(query):
     response = dns.message.Message(query.id)
-    response.flags = dns.flags.QR | dns.flags.RA | (query.flags & dns.flags.RD)
+    response.flags = dns.flags.QR | (query.flags & dns.flags.RD)
+
+    if not config['disable_ra_bit']:
+        response.flags |= dns.flags.RA
+
     response.set_opcode(query.opcode())
     response.question = list(query.question)
     return response
