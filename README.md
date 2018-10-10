@@ -18,38 +18,38 @@ Ubuntu 16.04, although it can be run on any distribution.
 
 * Install the dependencies:
 
-```
-$ sudo apt install virtualenv python3 python3-dev redis-server
+```bash
+sudo apt install virtualenv python3 python3-dev redis-server
 ```
 
 * Configure Redis to use a file socket. If you don't need Redis for anything
 else, you can also disable it from using TCP ports. The command below does
 these two things mentioned above:
 
-```
-$ sudo sed -ri 's/^bind /#&/;s/^(port ).*$/\10/;s/^# (unixsocket)/\1/;s/^(unixsocketperm )[0-9]+/\1777/' /etc/redis/redis.conf
+```bash
+sudo sed -ri 's/^bind /#&/;s/^(port ).*$/\10/;s/^# (unixsocket)/\1/;s/^(unixsocketperm )[0-9]+/\1777/' /etc/redis/redis.conf
 ```
 
 * Clone and enter into the repository directory:
 
-```
-$ git clone https://github.com/supriyo-biswas/simple-dns-server
-$ cd simple-dns-server
+```bash
+git clone https://github.com/supriyo-biswas/simple-dns-server
+cd simple-dns-server
 ```
 
 * Create a virtualenv for this project, and install the dependencies:
 
-```
-$ virtualenv -p python3 venv
-$ . venv/bin/activate
-$ pip install git+https://github.com/rthalley/dnspython@master
-$ pip install redis idna hiredis
+```bash
+virtualenv -p python3 venv
+. venv/bin/activate
+pip install git+https://github.com/rthalley/dnspython@master
+pip install redis idna hiredis
 ```
 
 * Run the server:
 
-```
-$ sudo ./server.py
+```bash
+sudo ./server.py
 ```
 
 If you don't want to run it as root, consider looking into authbind.
@@ -59,7 +59,7 @@ If you don't want to run it as root, consider looking into authbind.
 You can run the server with a JSON configuration file, as follows:
 
 ```
-$ sudo ./server.py /path/to/config.json
+sudo ./server.py /path/to/config.json
 ```
 
 The following settings can be configured. All of these have reasonable
@@ -83,6 +83,9 @@ defaults.
   "port": 5454
 }
 ```
+
+An example configuration to block many adservers can be found here:
+https://gist.github.com/supriyo-biswas/5af4f0ef02819a9f7f1859d847d033aa
 
 ## License
 
