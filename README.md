@@ -33,8 +33,8 @@ sudo sed -ri 's/^bind /#&/;s/^(port ).*$/\10/;s/^# (unixsocket)/\1/;s/^(unixsock
 * Clone and enter into the repository directory:
 
 ```bash
-git clone https://github.com/supriyo-biswas/simple-dns-server
-cd simple-dns-server
+git clone https://github.com/supriyo-biswas/adblock-dns-server
+cd adblock-dns-server
 ```
 
 * Create a virtualenv for this project, and install the dependencies:
