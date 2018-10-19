@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import sys
 import time
 import math
@@ -47,7 +48,17 @@ def get_config(conf=None):
         else:
             config[entry] = {i + '.' for i in config[entry]}
 
-    config.setdefault('redis_socket_file', '/var/run/redis/redis.sock')
+    if 'redis_socket_file' not in config:
+        for sockfile in [
+            '/var/run/redis/redis.sock',
+            '/var/run/redis/redis-server.sock'
+        ]:
+            if os.path.exists(sockfile):
+                config['redis_socket_file'] = path
+                break
+        else:
+            raise Exception('Unable to find redis socket path')
+
     config.setdefault('ratelimits', {})
     config.setdefault('port', 53)
 
