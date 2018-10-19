@@ -54,7 +54,7 @@ def get_config(conf=None):
             '/var/run/redis/redis-server.sock'
         ]:
             if os.path.exists(sockfile):
-                config['redis_socket_file'] = path
+                config['redis_socket_file'] = sockfile
                 break
         else:
             raise Exception('Unable to find redis socket path')
