@@ -70,11 +70,11 @@ def get_config(conf=None):
 
 def is_blacklisted_host(host):
     while host:
-        if host in config['blacklist']:
-            return True
-
         if host in config['whitelist']:
             return False
+
+        if host in config['blacklist']:
+            return True
 
         index = host.find('.')
         host = host[index + 1:]
