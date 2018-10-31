@@ -123,7 +123,7 @@ def dns_query(name, rdtype):
             rv = (response.rcode(), response.answer, response.authority, response.additional)
             expiration = max(60, min(int(time.time() - result.expiration), 3600))
     except dns.exception.DNSException as e:
-        expiration = 300
+        expiration = 60
         if isinstance(e, dns.resolver.NXDOMAIN):
             rcode = dns.rcode.NXDOMAIN
         elif isinstance(e, dns.resolver.NoMetaqueries):
