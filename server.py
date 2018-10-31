@@ -108,9 +108,6 @@ def dns_query(name, rdtype):
     if not rdtype in allowed_rdtypes:
         return (dns.rcode.REFUSED, [], [], [])
 
-    if not name.endswith('.'):
-        return (dns.rcode.NXDOMAIN, [], [], [])
-
     try:
         key = 'dns:q:%s:%i' % (name, rdtype)
         cached_result = redis_conn.get(key)
@@ -124,7 +121,7 @@ def dns_query(name, rdtype):
             result = dns.resolver.query(name, rdtype, raise_on_no_answer=False)
             response = result.response
             rv = (response.rcode(), response.answer, response.authority, response.additional)
-            expiration = max(300, int((time.time() - result.expiration)/3))
+            expiration = max(60, min(int(time.time() - result.expiration), 3600))
     except dns.exception.DNSException as e:
         expiration = 300
         if isinstance(e, dns.resolver.NXDOMAIN):
