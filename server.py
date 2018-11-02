@@ -155,7 +155,7 @@ def handle_query(raw_data, client_ip):
     if config['ratelimits']['enabled'] and ratelimited(client_ip):
         return
 
-    name = str(query.question[0].name)
+    name = str(query.question[0].name).lower()
     rdtype = query.question[0].rdtype
     result = dns_query(name, rdtype)
     response = make_response(query)
