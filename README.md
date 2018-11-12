@@ -22,9 +22,9 @@ Ubuntu 16.04, although it can be run on any distribution.
 sudo apt install virtualenv python3 python3-dev redis-server
 ```
 
-* Configure Redis to use a file socket. If you don't need Redis for anything
-else, you can also disable it from using TCP ports. The command below does
-these two things mentioned above:
+* Configure Redis to use a Unix domain socket. If you don't need Redis for
+anything else, you can also disable it from using TCP ports. The command below
+does both of these things mentioned above:
 
 ```bash
 sudo sed -ri 's/^bind /#&/;s/^(port ).*$/\10/;s/^# (unixsocket)/\1/;s/^(unixsocketperm )[0-9]+/\1777/' /etc/redis/redis.conf
@@ -49,7 +49,7 @@ pip install redis idna hiredis
 * Run the server:
 
 ```bash
-sudo ./server.py
+sudo venv/bin/python server.py
 ```
 
 If you don't want to run it as root, consider looking into authbind.
@@ -59,7 +59,7 @@ If you don't want to run it as root, consider looking into authbind.
 You can run the server with a JSON configuration file, as follows:
 
 ```
-sudo ./server.py /path/to/config.json
+sudo venv/bin/python server.py /path/to/config.json
 ```
 
 The following settings can be configured. All of these have reasonable
