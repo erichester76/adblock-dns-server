@@ -55,7 +55,7 @@ sudo setcap cap_net_bind_service=+ep venv/bin/python3
 * Run the server:
 
 ```bash
-sudo venv/bin/python3 server.py
+./venv/bin/python3 server.py
 ```
 
 ## Configuration
@@ -63,7 +63,7 @@ sudo venv/bin/python3 server.py
 You can run the server with a JSON configuration file, as follows:
 
 ```
-sudo venv/bin/python server.py /path/to/config.json
+./venv/bin/python server.py /path/to/config.json
 ```
 
 The following settings can be configured. All of these have reasonable
