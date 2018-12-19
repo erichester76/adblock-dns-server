@@ -46,13 +46,17 @@ pip install git+https://github.com/rthalley/dnspython@master
 pip install redis idna hiredis
 ```
 
+* Add the cap_net_bind_service capability so that it can be run on port 53.
+
+```bash
+sudo setcap cap_net_bind_service=+ep venv/bin/python3
+```
+
 * Run the server:
 
 ```bash
-sudo venv/bin/python server.py
+sudo venv/bin/python3 server.py
 ```
-
-If you don't want to run it as root, consider looking into authbind.
 
 ## Configuration
 
