@@ -17,6 +17,7 @@ import dns.resolver
 import socketserver
 import dns.rdatatype
 import dns.exception
+import dns.rdataclass
 
 allowed_rdtypes = [
     dns.rdatatype.A,
@@ -104,8 +105,8 @@ def ratelimited(ip):
     redis_conn.expire(key, math.ceil(ratio))
     return tokens < 1
 
-def dns_query(name, rdtype):
-    if not rdtype in allowed_rdtypes:
+def dns_query(name, rdclass, rdtype):
+    if rdclass != dns.rdataclass.IN or rdtype not in allowed_rdtypes:
         return (dns.rcode.REFUSED, [], [], [])
 
     try:
@@ -157,7 +158,8 @@ def handle_query(raw_data, client_ip):
 
     name = str(query.question[0].name).lower()
     rdtype = query.question[0].rdtype
-    result = dns_query(name, rdtype)
+    rdclass = query.question[0].rdclass
+    result = dns_query(name, rdclass, rdtype)
     response = make_response(query)
     response.set_rcode(result[0])
     response.answer = result[1]
