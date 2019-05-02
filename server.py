@@ -83,15 +83,17 @@ def is_blacklisted_host(host):
     return False
 
 def ratelimited(ip):
-    # convert IPv6-mapped IPv4 address to pure IPv4 address.
     if '.' in ip[-4:]:
-        ip = ip[ip.rfind(':') + 1:]
+        # convert IPv6-mapped IPv4 address to pure IPv4 address.
+        key = 'dns:r:4:%s' % ip[ip.rfind(':') + 1:]
+    else:
+        # IPv6 /112 subnet
+        key = 'dns:r:6:%s' % socket.inet_pton(socket.AF_INET6, ip)[:-2]
 
     limit = config['ratelimits']['limit']
     limit_burst = config['ratelimits']['limit_burst']
     ratio = limit/limit_burst
 
-    key = 'dns:r:%s' % ip
     rl_params = redis_conn.get(key)
     current_time = time.time()
 
